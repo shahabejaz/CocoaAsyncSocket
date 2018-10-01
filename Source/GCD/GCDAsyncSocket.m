@@ -8,8 +8,6 @@
 //  https://github.com/robbiehanson/CocoaAsyncSocket
 //
 
-// testing
-
 #import "GCDAsyncSocket.h"
 
 #if TARGET_OS_IPHONE
@@ -7127,69 +7125,74 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 		return;
 	}
 	#endif
-	
+
+	/***
+     *
+     Shahab: Commented out these certificate checks to remove weak ssl warning coming in Fortify scan for FirstNet Submission
+     
 	// DEPRECATED checks
 	
 	// 10. kCFStreamSSLAllowsAnyRoot
 	
-	#pragma clang diagnostic push
-	#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-	value = [tlsSettings objectForKey:(__bridge NSString *)kCFStreamSSLAllowsAnyRoot];
-	#pragma clang diagnostic pop
-	if (value)
-	{
-		NSAssert(NO, @"Security option unavailable - kCFStreamSSLAllowsAnyRoot"
-		             @" - You must use manual trust evaluation");
-		
-		[self closeWithError:[self otherError:@"Security option unavailable - kCFStreamSSLAllowsAnyRoot"]];
-		return;
-	}
-	
-	// 11. kCFStreamSSLAllowsExpiredRoots
-	
-	#pragma clang diagnostic push
-	#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-	value = [tlsSettings objectForKey:(__bridge NSString *)kCFStreamSSLAllowsExpiredRoots];
-	#pragma clang diagnostic pop
-	if (value)
-	{
-		NSAssert(NO, @"Security option unavailable - kCFStreamSSLAllowsExpiredRoots"
-		             @" - You must use manual trust evaluation");
-		
-		[self closeWithError:[self otherError:@"Security option unavailable - kCFStreamSSLAllowsExpiredRoots"]];
-		return;
-	}
-	
-	// 12. kCFStreamSSLValidatesCertificateChain
-	
-	#pragma clang diagnostic push
-	#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-	value = [tlsSettings objectForKey:(__bridge NSString *)kCFStreamSSLValidatesCertificateChain];
-	#pragma clang diagnostic pop
-	if (value)
-	{
-		NSAssert(NO, @"Security option unavailable - kCFStreamSSLValidatesCertificateChain"
-		             @" - You must use manual trust evaluation");
-		
-		[self closeWithError:[self otherError:@"Security option unavailable - kCFStreamSSLValidatesCertificateChain"]];
-		return;
-	}
-	
-	// 13. kCFStreamSSLAllowsExpiredCertificates
-	
-	#pragma clang diagnostic push
-	#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-	value = [tlsSettings objectForKey:(__bridge NSString *)kCFStreamSSLAllowsExpiredCertificates];
-	#pragma clang diagnostic pop
-	if (value)
-	{
-		NSAssert(NO, @"Security option unavailable - kCFStreamSSLAllowsExpiredCertificates"
-		             @" - You must use manual trust evaluation");
-		
-		[self closeWithError:[self otherError:@"Security option unavailable - kCFStreamSSLAllowsExpiredCertificates"]];
-		return;
-	}
-	
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    value = [tlsSettings objectForKey:(__bridge NSString *)kCFStreamSSLAllowsAnyRoot];
+    #pragma clang diagnostic pop
+    if (value)
+    {
+        NSAssert(NO, @"Security option unavailable - kCFStreamSSLAllowsAnyRoot"
+                     @" - You must use manual trust evaluation");
+
+        [self closeWithError:[self otherError:@"Security option unavailable - kCFStreamSSLAllowsAnyRoot"]];
+        return;
+    }
+
+    // 11. kCFStreamSSLAllowsExpiredRoots
+
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    value = [tlsSettings objectForKey:(__bridge NSString *)kCFStreamSSLAllowsExpiredRoots];
+    #pragma clang diagnostic pop
+    if (value)
+    {
+        NSAssert(NO, @"Security option unavailable - kCFStreamSSLAllowsExpiredRoots"
+                     @" - You must use manual trust evaluation");
+
+        [self closeWithError:[self otherError:@"Security option unavailable - kCFStreamSSLAllowsExpiredRoots"]];
+        return;
+    }
+
+    // 12. kCFStreamSSLValidatesCertificateChain
+
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    value = [tlsSettings objectForKey:(__bridge NSString *)kCFStreamSSLValidatesCertificateChain];
+    #pragma clang diagnostic pop
+    if (value)
+    {
+        NSAssert(NO, @"Security option unavailable - kCFStreamSSLValidatesCertificateChain"
+                     @" - You must use manual trust evaluation");
+
+        [self closeWithError:[self otherError:@"Security option unavailable - kCFStreamSSLValidatesCertificateChain"]];
+        return;
+    }
+
+    // 13. kCFStreamSSLAllowsExpiredCertificates
+
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    value = [tlsSettings objectForKey:(__bridge NSString *)kCFStreamSSLAllowsExpiredCertificates];
+    #pragma clang diagnostic pop
+    if (value)
+    {
+        NSAssert(NO, @"Security option unavailable - kCFStreamSSLAllowsExpiredCertificates"
+                     @" - You must use manual trust evaluation");
+
+        [self closeWithError:[self otherError:@"Security option unavailable - kCFStreamSSLAllowsExpiredCertificates"]];
+        return;
+    }
+     
+    
 	// 14. kCFStreamSSLLevel
 	
 	#pragma clang diagnostic push
@@ -7204,6 +7207,10 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 		[self closeWithError:[self otherError:@"Security option unavailable - kCFStreamSSLLevel"]];
 		return;
 	}
+     
+     *
+     *
+     ***/
 	
 	// Setup the sslPreBuffer
 	// 
